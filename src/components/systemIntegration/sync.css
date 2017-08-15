@@ -1,0 +1,58 @@
+.sync-row {
+  font-size: 18px;
+  text-align: center;
+}
+.sync-row-list {
+  margin: 25px 0;
+}
+.sync-row-list ul li {
+  height: 20px;
+}
+.sync-row-list ul li label {
+  font-weight: normal;
+}
+.sync-row-list ul li label img {
+  width: 13px;
+  margin-right: 7px;
+}
+.sync-row-list ul li label span {
+  margin: 0;
+  margin-right: 7px;
+}
+.sync-row-list ul li span {
+  margin-left: 15px;
+  color: #b2b2b2;
+}
+.sync-row-list ul li span a {
+  color: #3994EF;
+}
+.sync-row-list ul li .sync-progress {
+  position: absolute;
+  width: 165px;
+  top: 23px;
+  left: 0px;
+  display: inline-block;
+}
+.sync-row-list ul li .sync-progress a {
+  color: #3994EF;
+  position: absolute;
+  right: -37px;
+  top: -8px;
+}
+.sync-row-list ul li .sync-progress .progress-bg,
+.sync-row-list ul li .sync-progress .progress-p {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  top: 0px;
+  height: 5px;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+  background: #D8D8D8;
+}
+.sync-row-list ul li .sync-progress .progress-p {
+  width: 50%;
+  z-index: 3;
+  background: #DD3730;
+}

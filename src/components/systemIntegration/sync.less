@@ -1,0 +1,60 @@
+.sync-row{
+  font-size: 18px;
+  text-align: center;
+}
+.sync-row-list{
+  margin: 25px 0;
+  ul{
+    li{
+      height: 20px;
+      label{
+        font-weight: normal;
+        img{
+          width: 13px;
+          margin-right: 7px;
+        }
+        span{
+          margin: 0;
+          margin-right: 7px;
+        }
+      }
+      span{
+        margin-left: 15px;
+        color: #b2b2b2;
+        a{
+          color: #3994EF;
+        }
+      }
+      .sync-progress{
+        position:absolute;
+        width: 165px;
+        top: 23px;
+        left: 0px;
+        display: inline-block;
+        a{
+          color: #3994EF;
+          position: absolute;
+          right: -37px;
+          top: -8px;
+        }
+        .progress-bg,.progress-p{
+          z-index: 2;
+          position: absolute;
+          left: 0;
+          top:0px;
+          height: 5px;
+          border-radius: 4px;
+          overflow: hidden;
+          width: 100%;
+          background: #D8D8D8
+        }
+        .progress-p{
+          width: 50%;
+          z-index: 3;
+          background: #DD3730
+        }
+      }
+    }
+
+  }
+}
