@@ -12,12 +12,12 @@ export default class NotesDetailsAjaxStore {
     @observable queryStandardDataList = [];
 
     @observable DataListColumn = [
-        {type: 'string', id: 'userName', label: '用户名称'},
-        {type: 'string', id: 'userMobile', label: '用户手机号'},
-        {type: 'string', id: 'userPassword', label: '用户密码'},
-        {type: 'string', id: 'userEmail', label: '用户邮箱'},
-        {type: 'string', id: 'deptName', label: '部门名称'},
-        {type: 'string', id: 'ts', label: '时间'},
+        {type: 'string', id: 'tenantId', label: '租户ID'},
+        {type: 'string', id: 'time', label: '时间'},
+        {type: 'string', id: 'businessTripCount', label: '申请单数量'},
+        {type: 'string', id: 'expenseCount', label: '报销单数量'},
+        {type: 'string', id: 'loanBillCount', label: '借款单数量'},
+
     ]
 
     @observable items = 1;
@@ -32,7 +32,7 @@ export default class NotesDetailsAjaxStore {
         var params =JSON.stringify(param)
         $.ajax({
             type: "POST",
-            url: Config.tenant.queryUserListByValid,
+            url: Config.allBills.getBillsListDetail,
             contentType: "application/json",
             // dataType: "json",
             data: params,
@@ -41,20 +41,20 @@ export default class NotesDetailsAjaxStore {
                 if (JSON.parse(data).success) {
                     if(typeof callback == "function")
                         callback(data);
-                    that.queryStandardDataList = Object.assign([], JSON.parse(data).data.list.map((item) => {
-                        let userName = item.userName ? item.userName : [];
-                        let userMobile = item.phone ? item.phone : [];
-                        let userPassword = item.password ? item.password : [];
-                        let userEmail = item.email ? item.email : [];
-                        let deptName = item.deptname ? item.deptname : [];
-                        let ts = item.ts ? item.ts : [];
-                        item.userName = userName;
-                        item.userMobile = userMobile;
-                        item.userPassword = userPassword;
-                        item.userEmail = userEmail;
-                        item.deptName = deptName;
-                        item.ts = ts;
-                        return item;
+                    that.queryStandardDataList = Object.assign([], JSON.parse(data).data.map((item) => {
+                        for (var value of item) {
+                            let tenantId = value.tenantId ? value.tenantId : [];
+                            let time = value.time ? value.time : [];
+                            let businessTripCount = value.businessTripCount ? value.businessTripCount : 0;
+                            let expenseCount = value.expenseCount ? value.expenseCount : 0;
+                            let loanBillCount = value.loanBillCount ? value.loanBillCount : 0;
+                            value.tenantId = tenantId;
+                            value.time = time;
+                            value.businessTripCount = businessTripCount;
+                            value.expenseCount = expenseCount;
+                            value.loanBillCount = loanBillCount;
+                            return value;
+                        }
                     }))
 
                     console.log(that.queryStandardDataList);
@@ -184,5 +184,4 @@ export default class NotesDetailsAjaxStore {
         if(typeof callback == "function")
             callback(data);
     }
-
 }

@@ -87,7 +87,7 @@ ReactDom.render(
         <Route path="/tenant" component={Tenant}/>
         <Route path="/tenantInfo" component={TenantInfo}/>
         <Route path="/notes" component={Notes}/>
-        <Route path="/notesDetails" component={NotesDetails}/>
+        <Route path="/notesDetails/:tenantId/:businessTripCount/:expenseCount/:loanBillCount" component={NotesDetails}/>
         <Route path="/bills" component={Bills}/>
         <Route path="/user" component={User}/>
         <Route path="/lead" component={Lead}/>

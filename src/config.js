@@ -1,5 +1,5 @@
 // 常量
-const DEV_SERVER = 'http://127.0.0.1:8080'//'http://172.20.13.230:8082';
+const DEV_SERVER = 'http://127.0.0.1:8090'//'http://172.20.13.230:8082';
 
 //调用java api的url
 let protocol = "http";
@@ -146,6 +146,7 @@ var Config = {
     },
     allBills:{
         getBillsList:serverUrl+'/bills/getBillsList'+ requestHeader,
+        getBillsListDetail:serverUrl+'/bills/getBillsListDetail'+ requestHeader,
     },
     tenant: {
         getTenantListByMobile: serverUrl + '/tenant/getTenantListByMobile' + requestHeader,

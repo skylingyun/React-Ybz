@@ -8,6 +8,8 @@ import {
     Breadcrumb, BreadcrumbItem, Button
 } from "react-bootstrap";
 import BillsAjaxStore from "../../stores/datastatssystem/BillsAjaxStore";
+import NotesDetailsAjaxStore from "../../stores/datastatssystem/NotesDetailsAjaxStore";
+import NotesDetails from "./NotesDetails";
 
 const billsAjaxStore = new BillsAjaxStore();
 
@@ -23,7 +25,6 @@ export default class Bills extends React.Component {
             pageSize:20,
             inputValue: "",
         }
-
     }
 
     componentDidMount() {
@@ -72,7 +73,7 @@ export default class Bills extends React.Component {
             render() {
                 return (
                     <td>
-                         <a href ={"#/notesDetails"}>详情</a>
+                         <a href ={"#/notesDetails/"+[this.props.rowObj.tenantId]+"/"+[this.props.rowObj.businessTripCount]+"/"+[this.props.rowObj.expenseCount]+"/"+[this.props.rowObj.loanBillCount]}>详情</a>
                     </td>
                 );
             }
