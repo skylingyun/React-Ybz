@@ -22,7 +22,7 @@ export default class Bills extends React.Component {
             endTime: "",
             activePage: 1,
             totalPage: 1,
-            pageSize:20,
+            pageSize: 20,
             inputValue: "",
         }
     }
@@ -52,7 +52,7 @@ export default class Bills extends React.Component {
     }
     searchByConditions = () => {
         let param = {
-            "beginTime": this.state.beginTime,"endTime": this.state.endTime,
+            "beginTime": this.state.beginTime, "endTime": this.state.endTime,
             activePage: this.state.activePage, totalPage: this.state.pageSize
         }
         billsAjaxStore.queryStandardData(param);
@@ -73,7 +73,7 @@ export default class Bills extends React.Component {
             render() {
                 return (
                     <td>
-                         <a href ={"#/notesDetails/"+[this.props.rowObj.tenantId]+"/"+[this.props.rowObj.businessTripCount]+"/"+[this.props.rowObj.expenseCount]+"/"+[this.props.rowObj.loanBillCount]}>详情</a>
+                        <a href={"#/notesDetails/" + [this.props.rowObj.tenantId] + "/" + [this.props.rowObj.businessTripCount] + "/" + [this.props.rowObj.expenseCount] + "/" + [this.props.rowObj.loanBillCount]}>详情</a>
                     </td>
                 );
             }
@@ -90,10 +90,12 @@ export default class Bills extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-2">
-                            <DatePicker dateFormat="YYYY-mm-DD" value={this.state.beginTime} onChange={this.selectBeginTime}/>
+                            <DatePicker dateFormat="YYYY-mm-DD" value={this.state.beginTime}
+                                        onChange={this.selectBeginTime}/>
                         </div>
                         <div className="col-md-2">
-                            <DatePicker dateFormat="YYYY-mm-DD" value={this.state.endTime} onChange={this.selectEndTime}/>
+                            <DatePicker dateFormat="YYYY-mm-DD" value={this.state.endTime}
+                                        onChange={this.selectEndTime}/>
                         </div>
                         <div className="col-md-2">
                             <Button active onClick={this.searchByConditions}>搜索</Button>
@@ -105,10 +107,10 @@ export default class Bills extends React.Component {
                         columnsModel={billsAjaxStore.DataListColumn.toJS()}
                         tableData={billsAjaxStore.queryStandardDataList.toJS()}
                         operationColumnClass={CustomComponent}
-                         operationColumn={{
-                              className: 'operation',
-                              text: ' '
-                          }}
+                        operationColumn={{
+                            className: 'operation',
+                            text: ' '
+                        }}
                         // paging
                         // totalPage={this.state.totalPage}
                         // activePage={this.state.activePage}
@@ -117,6 +119,10 @@ export default class Bills extends React.Component {
                         // className="standard-grid"
                         localSearch/>
                     {/*</div>*/}
+                    <SSCGrid
+                        columnsModel={billsAjaxStore.DataListColumnSum.toJS()}
+                        tableData={billsAjaxStore.queryStandardDataListSum.toJS()}
+                        />
                 </div>
             </div>
         );

@@ -10,6 +10,7 @@ export default class NotesAjaxStore {
     globalStore = GlobalStore;
 
     @observable queryStandardDataList = [];
+    @observable queryStandardDataListSum = [];
 
     @observable DataListColumn = [
         {type: 'string', id: 'tenantId', label: '租户ID'},
@@ -26,6 +27,20 @@ export default class NotesAjaxStore {
         {type: 'string', id: 'totalMoney', label: '总金额'},
     ]
 
+    @observable DataListColumnSum = [
+        {type: 'string', id: 'travelSum', label: '出行记事合计'},
+        {type: 'string', id: 'travelMoneySum', label: '出行金额合计'},
+        {type: 'string', id: 'hotelSum', label: '住宿记事合计'},
+        {type: 'string', id: 'hotelMoneySum', label: '住宿金额合计'},
+        {type: 'string', id: 'otherSum', label: '其它记事合计'},
+        {type: 'string', id: 'otherMoneySum', label: '其它总金额合计'},
+        {type: 'string', id: 'eatingSum', label: '餐饮记事合计'},
+        {type: 'string', id: 'eatingMoneySum', label: '餐饮总金额合计'},
+        {type: 'string', id: 'gatherSum', label: '销售记事合计'},
+        {type: 'string', id: 'gatherMoneySum', label: '销售总金额合计'},
+        {type: 'string', id: 'totalMoneySum', label: '总金额合计'},
+    ]
+
     @observable items = 1;
 
     @observable activePage = 1;
@@ -34,6 +49,18 @@ export default class NotesAjaxStore {
     @action
     queryStandardData(param , callback) {
         var that = this;
+        var sumItem = null;
+        var travelSum = 0;
+        var travelMoneySum = 0;
+        var hotelSum = 0;
+        var hotelMoneySum = 0;
+        var otherSum = 0;
+        var otherMoneySum = 0;
+        var eatingSum = 0;
+        var eatingMoneySum = 0;
+        var gatherSum = 0;
+        var gatherMoneySum = 0;
+        var totalMoneySum = 0;
         that.globalStore.showWait();
         that.globalStore.hideAlert();
         var params =JSON.stringify(param)
@@ -73,12 +100,39 @@ export default class NotesAjaxStore {
                             value.gather = gather;
                             value.gatherMoney = gatherMoney;
                             value.totalMoney = totalMoney;
+
+                            travelSum += travel;
+                            travelMoneySum += travelMoney;
+                            hotelSum += hotel;
+                            hotelMoneySum += hotelMoney;
+                            otherSum += other;
+                            otherMoneySum += otherMoney;
+                            eatingSum += eating;
+                            eatingMoneySum += eatingMoney;
+                            gatherSum += gather;
+                            gatherMoneySum += gatherMoney;
+                            totalMoneySum += totalMoney;
+                            sumItem = value;
                             return value;
                         }
                     }))
                     if(typeof callback == "function")
                         callback(data);
                     console.log(that.queryStandardDataList);
+                    if(sumItem != null){
+                        sumItem.travelSum = travelSum;
+                        sumItem.travelMoneySum = travelMoneySum.toFixed(2);
+                        sumItem.hotelSum = hotelSum;
+                        sumItem.hotelMoneySum = hotelMoneySum.toFixed(2);
+                        sumItem.otherSum = otherSum;
+                        sumItem.otherMoneySum = otherMoneySum.toFixed(2);
+                        sumItem.eatingSum = eatingSum;
+                        sumItem.eatingMoneySum = eatingMoneySum.toFixed(2);
+                        sumItem.gatherSum = gatherSum;
+                        sumItem.gatherMoneySum = gatherMoneySum.toFixed(2);
+                        sumItem.totalMoneySum = totalMoneySum.toFixed(2);
+                        that.queryStandardDataListSum = [sumItem];
+                    }
                 } else {
                     that.queryStandardDataList=[]
                     that.globalStore.showError(data.msg ? data.msg : "查询失败")

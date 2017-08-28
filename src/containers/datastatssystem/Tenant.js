@@ -10,8 +10,10 @@ import {
     SplitButton
 } from "react-bootstrap";
 import TenantAjaxStore from "../../stores/datastatssystem/TenantAjaxStore";
+import TenantInfoAjaxStore from "../../stores/datastatssystem/TenantInfoAjaxStore";
 
 const tenantAjaxStore = new TenantAjaxStore();
+const tenantInfoAjaxStore = new TenantInfoAjaxStore();
 
 @observer
 export default class Tenant extends React.Component {
@@ -41,7 +43,7 @@ export default class Tenant extends React.Component {
 
     componentDidMount() {//查询列表
         let param = {"userMobile": this.state.inputValue}
-        tenantAjaxStore.queryStandardData(param);
+        // tenantAjaxStore.queryStandardData(param);
     }
 
     handleSelect(page) {
@@ -95,7 +97,19 @@ export default class Tenant extends React.Component {
         globalStore.showCancelModel("您确认要删除吗？", () => {
         }, () => {
             let params = {"tenantId": item.tenantId, "userMobile": this.state.inputValue}
-            tenantAjaxStore.deleteStandardData(params)
+            tenantAjaxStore.deleteStandardData(params, (data) => {
+                if (data.success){
+                    let param1 = {"userMobile": this.state.inputValue}
+                    tenantAjaxStore.queryStandardData(param1, (data) => {
+                        for (var item of data.data){
+                            if(item.isLocal=="1"){
+                                var deleteTd = document.getElementById(item.tenantId);
+                                deleteTd.style.visibility='hidden'
+                            }
+                        }
+                    })
+                }
+            })
         });
     }
 
@@ -123,7 +137,13 @@ export default class Tenant extends React.Component {
 
     submitAll = () => {
         let param = {"userMobile": this.state.inputValue}
-        tenantAjaxStore.queryStandardData(param, () => {
+        tenantAjaxStore.queryStandardData(param, (data) => {
+            for (var item of data.data){
+                if(item.isLocal=="1"){
+                    var deleteTd = document.getElementById(item.tenantId);
+                    deleteTd.style.visibility='hidden'
+                }
+            }
         })
     }
 
@@ -169,9 +189,11 @@ export default class Tenant extends React.Component {
             },
             render() {
                 return (
-                    <td>
+                <td>
+                    <div id={this.props.rowObj.tenantId}>
                         <a onClick={this.handleEvent.bind(this, 2)} href="javascript:;">删除关系</a>
-                    </td>
+                    </div>
+                </td>
                 );
             }
         });
@@ -200,7 +222,7 @@ export default class Tenant extends React.Component {
                             <FormGroup>
                                 <FormControl type="text" placeholder="请输入手机号" value={this.state.inputValue}
                                              onChange={this.setInputValue}/>
-                                <FormControl.Feedback />
+                                <FormControl.Feedback/>
                             </FormGroup>
                         </div>
                         <div className="col-md-2">
@@ -230,7 +252,7 @@ export default class Tenant extends React.Component {
                                     <FormGroup>
                                         <FormControl type="text" placeholder="请输入手机号" value={this.state.inputValue}
                                                      onChange={this.setInputValue}/>
-                                        <FormControl.Feedback />
+                                        <FormControl.Feedback/>
                                     </FormGroup>
                                 </div>
                                 <div className="col-md-5">
@@ -259,22 +281,22 @@ export default class Tenant extends React.Component {
                             <FormGroup>
                                 <FormControl type="text" placeholder="请输入名称" value={this.state.userName}
                                              onChange={this.setUserName}/>
-                                <FormControl.Feedback />
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <FormGroup>
                                 <FormControl type="text" placeholder="请输入编码" value={this.state.userCode}
                                              onChange={this.setUserCode}/>
-                                <FormControl.Feedback />
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <FormGroup>
                                 <FormControl type="text" placeholder="请输入手机号" value={this.state.inputValue}
                                              onChange={this.setInputValue}/>
-                                <FormControl.Feedback />
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <FormGroup>
                                 <FormControl type="text" placeholder="请输入邮箱" value={this.state.userEmail}
                                              onChange={this.setUserEmail}/>
-                                <FormControl.Feedback />
+                                <FormControl.Feedback/>
                             </FormGroup>
                         </Modal.Body>
                         <Modal.Footer>

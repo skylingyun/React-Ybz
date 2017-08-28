@@ -116,6 +116,10 @@ export default class Notes extends React.Component {
                         // className="standard-grid"
                         localSearch/>
                     {/*</div>*/}
+                    <SSCGrid
+                        columnsModel={notesAjaxStore.DataListColumnSum.toJS()}
+                        tableData={notesAjaxStore.queryStandardDataListSum.toJS()}
+                    />
                 </div>
             </div>
         );

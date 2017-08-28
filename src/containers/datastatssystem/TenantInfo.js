@@ -145,7 +145,7 @@ export default class Tenant extends React.Component {
             render() {
                 return (
                     <td>
-                        <a onClick={this.handleEvent.bind(this, 2)} href="javascript:;">删除关系</a>
+                        {/*<a onClick={this.handleEvent.bind(this, 2)} href="javascript:;">删除关系</a>*/}
                     </td>
                 );
             }

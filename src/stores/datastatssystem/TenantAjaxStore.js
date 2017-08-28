@@ -53,12 +53,14 @@ export default class TenantAjaxStore {
                         let tenantEmail = item.tenantEmail ? item.tenantEmail : [];
                         let tenantTel = item.tenantTel ? item.tenantTel : [];
                         let tenantFullname = item.tenantFullname ? item.tenantFullname : [];
+                        let isLocal = item.isLocal ?item.isLocal : 0;
                         item.tenantId = tenantId;
                         item.tenantName = tenantName;
                         item.tenantAddress = tenantAddress;
                         item.tenantEmail = tenantEmail;
                         item.tenantTel = tenantTel;
                         item.tenantFullname = tenantFullname;
+                        item.isLocal = isLocal;
                         return item;
                     }))
                     if (typeof callback == "function")
@@ -77,7 +79,7 @@ export default class TenantAjaxStore {
 
     //删除接口
     @action
-    deleteStandardData(data) {
+    deleteStandardData(data, callback) {
         var that = this;
         that.globalStore.showWait();
         var params = data;
@@ -90,7 +92,9 @@ export default class TenantAjaxStore {
             success: data => {
                 that.globalStore.hideWait();
                 if (data.success) {
-                    that.queryStandardData(params);
+                    // that.queryStandardData(params);
+                    if (typeof callback == "function")
+                        callback(data);
                 } else {
                     that.globalStore.showError(data.message ? data.message : "查询失败")
                 }

@@ -10,6 +10,7 @@ export default class BillsAjaxStore {
     globalStore = GlobalStore;
 
     @observable queryStandardDataList = [];
+    @observable queryStandardDataListSum = [];
 
     @observable DataListColumn = [
         {type: 'string', id: 'tenantId', label: '租户ID'},
@@ -22,6 +23,16 @@ export default class BillsAjaxStore {
         {type: 'string', id: 'totalMoney', label: '总金额'},
     ]
 
+    @observable DataListColumnSum = [
+        {type: 'string', id: 'businessTripCountSum', label: '申请单数量合计'},
+        {type: 'string', id: 'businessTripMoneySum', label: '申请单金额合计'},
+        {type: 'string', id: 'expenseCountSum', label: '报销单数量合计'},
+        {type: 'string', id: 'expenseMoneySum', label: '报销单金额合计'},
+        {type: 'string', id: 'loanBillCountSum', label: '借款单数量合计'},
+        {type: 'string', id: 'loanBillMoneySum', label: '借款单金额合计'},
+        {type: 'string', id: 'totalMoneySum', label: '总金额合计'},
+    ]
+
     @observable items = 1;
 
     @observable activePage = 1;
@@ -30,6 +41,14 @@ export default class BillsAjaxStore {
     @action
     queryStandardData(param , callback) {
         var that = this;
+        var sumItem = null;
+        var businessTripCountSum = 0;
+        var expenseCountSum = 0;
+        var loanBillCountSum = 0;
+        var businessTripMoneySum = 0.0;
+        var expenseMoneySum = 0.0;
+        var loanBillMoneySum = 0.0;
+        var totalMoneySum = 0.0;
         that.globalStore.showWait();
         that.globalStore.hideWait();
         var params =JSON.stringify(param)
@@ -61,12 +80,31 @@ export default class BillsAjaxStore {
                             value.loanBillCount = loanBillCount;
                             value.loanBillMoney = loanBillMoney;
                             value.totalMoney = totalMoney;
+
+                            businessTripCountSum += businessTripCount;
+                            businessTripMoneySum += businessTripMoney;
+                            expenseCountSum += expenseCount;
+                            expenseMoneySum += expenseMoney;
+                            loanBillCountSum += loanBillCount;
+                            loanBillMoneySum += loanBillMoney;
+                            totalMoneySum += totalMoney;
+                            sumItem = value;
                             return value;
                         }
                     }))
                     if(typeof callback == "function")
                         callback(data);
                     console.log(that.queryStandardDataList);
+                    if(sumItem != null){
+                        sumItem.businessTripCountSum = businessTripCountSum;
+                        sumItem.businessTripMoneySum = businessTripMoneySum.toFixed(2);
+                        sumItem.expenseCountSum = expenseCountSum;
+                        sumItem.expenseMoneySum = expenseMoneySum.toFixed(2);
+                        sumItem.loanBillCountSum = loanBillCountSum;
+                        sumItem.loanBillMoneySum = loanBillMoneySum.toFixed(2);
+                        sumItem.totalMoneySum = totalMoneySum.toFixed(2);
+                        that.queryStandardDataListSum = [sumItem];
+                    }
                 } else {
                     that.queryStandardDataList=[]
                     that.globalStore.showError(data.msg ? data.msg : "查询失败")

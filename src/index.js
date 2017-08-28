@@ -36,6 +36,7 @@ import User from "./containers/datastatssystem/User";
 import TenantInfo from "./containers/datastatssystem/TenantInfo";
 import NotesDetails from "./containers/datastatssystem/NotesDetails";
 import Bills from "./containers/datastatssystem/Bills";
+import TenantRelationship from './containers/datastatssystem/TenantRelationship';
 
 const requireAuth = (nextState, replace, next) => {
   //切换路由时初始化环境
@@ -97,6 +98,7 @@ ReactDom.render(
           <Route path="hotel/:pk" component={Hotels}/>
           <Route path="other/:pk" component={Other}/>
           <Route path="restaurant/:pk" component={Restaurant}/>
+          <Route path="/tenantRelationship" component={TenantRelationship}/>
         </Route>
         <Route path="sqrules" component={SqRules} />
       </Route>

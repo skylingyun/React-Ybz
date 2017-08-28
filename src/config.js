@@ -156,6 +156,8 @@ var Config = {
         queryUserListByValid: serverUrl + '/tenant/queryUserListByValid' + requestHeader,
         queryTenantInfoByTenantId: serverUrl + '/tenant/queryTenantInfoByTenantId' + requestHeader,
         queryTenantInfoList: serverUrl + '/tenant/queryTenantInfoList' + requestHeader,
+        updateTenantUserRelation: serverUrl + '/tenant/updateTenantUserRelation' + requestHeader,
+        queryTenantUserRelation: serverUrl + '/tenant/queryTenantUserRelation' + requestHeader,
     }
 
 };
